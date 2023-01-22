@@ -1,0 +1,7 @@
+@EndUserText.label: 'Order manager service'
+define service ZOrderManager {
+  expose ZC_R54_Orders as Orders;
+  expose ZC_R54_OrderItems as Items;
+  expose ZC_R54_OrderStatuses as Statuses;
+  expose ZC_R54_OrderStatusTexts as StatusTexts;
+}

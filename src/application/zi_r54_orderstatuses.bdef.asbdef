@@ -1,0 +1,42 @@
+managed implementation in class zbp_i_r54_orderstatuses unique;
+
+define behavior for ZI_R54_OrderStatuses alias Code
+  persistent table zr54orderstatus
+  lock master
+  authorization master( instance )
+  etag ModifiedAt
+  {
+    field( mandatory ) Id, Name, Description;
+    field( readonly ) CreatedAt, ModifiedAt, CreatedBy, ModifiedBy;
+
+    create;
+    update;
+    delete;
+
+    association _Texts { create; }
+
+    validation validateNotEmpty on save { field Id, Name, Description; }
+
+    mapping for zr54orderstatus corresponding;
+
+  }
+
+define behavior for ZI_R54_OrderStatusTexts alias Texts
+  persistent table zr54orderstatust
+  lock dependent ( Id = Id )
+  authorization dependent( Id = Id )
+  etag ModifiedAt
+  {
+    field( mandatory ) Language, Id, Name, Description;
+    field( readonly ) CreatedAt, ModifiedAt, CreatedBy, ModifiedBy;
+
+    update;
+    delete;
+
+    validation validateNotEmpty on save { field Id, Name, Description; }
+
+    association _Status;
+
+    mapping for zr54orderstatust corresponding;
+
+  }

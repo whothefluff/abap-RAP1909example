@@ -3,12 +3,12 @@
 @AbapCatalog.preserveKey: true
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Orders'
-define root view ZI_r54_Orders
+define root view ZI_R54_Orders
   as select from zr54order
   composition [0..*] of ZI_R54_OrderItems as _Items
-  association [1..1] to ZI_r54_OrderStatuses as _Status
+  association [1..1] to ZI_R54_OrderStatuses as _Status
     on $projection.Status = _Status.Id
-  association [1..1] to ZI_r54_OrderStatusLocalized as _LocalizedStatus
+  association [1..1] to ZI_R54_OrderStatusLocalized as _LocalizedStatus
     on $projection.Status = _LocalizedStatus.Id
   association [0..1] to I_User as _CreationUser
     on $projection.CreatedBy = _CreationUser.UserID

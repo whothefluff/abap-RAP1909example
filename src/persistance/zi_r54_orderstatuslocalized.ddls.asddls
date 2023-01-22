@@ -3,14 +3,14 @@
 @AbapCatalog.preserveKey: true
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Order status texts'
-define view ZI_r54_OrderStatusLocalized
+define view ZI_R54_OrderStatusLocalized
   as select from zr54orderstatus
     left outer join zr54orderstatust
       on zr54orderstatus.id = zr54orderstatust.id
       and zr54orderstatust.language = $session.system_language
-  association to parent ZI_r54_OrderStatuses as _Status
+  association [1..1] to ZI_R54_OrderStatuses as _Status
     on $projection.Id = _Status.Id
-  association [1..*] to ZI_r54_OrderStatusTexts as _Texts
+  association [1..*] to ZI_R54_OrderStatusTexts as _Texts
     on $projection.Id = _Texts.Id
   association [0..1] to I_User as _CreationUser
     on $projection.CreatedBy = _CreationUser.UserID

@@ -3,8 +3,8 @@
 @AbapCatalog.preserveKey: true
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Order status texts'
-define view ZI_r54_OrderStatusTexts
-  as select from zR54orderstatust
+define view ZI_R54_OrderStatusTexts
+  as select from zr54orderstatust
   association to parent ZI_R54_OrderStatuses as _Status
     on $projection.Id = _Status.Id
   association [0..1] to ZI_R54_OrderStatusLocalized as _LocalizedText

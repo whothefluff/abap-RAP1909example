@@ -1,0 +1,11 @@
+projection;
+
+define behavior for ZC_R54_ReadOrders alias Orders
+{
+  use association _Items;
+}
+
+define behavior for ZC_R54_ReadOrderItems alias Items
+{
+  use association _Header;
+}

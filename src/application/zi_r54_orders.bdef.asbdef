@@ -1,49 +1,46 @@
 managed implementation in class zbp_i_r54_orders unique;
 
-define behavior for ZI_r54_Orders alias Orders
-persistent table zr54order
-lock master
-authorization master( instance )
-etag ModifiedAt
-{
-  field( mandatory ) Status;
-  field( readonly ) Id, CreatedAt, ModifiedAt, CreatedBy, ModifiedBy;
+define behavior for ZI_R54_Orders alias Orders
+  persistent table zr54order
+  lock master
+  authorization master( instance )
+  etag ModifiedAt
+  {
+    field( mandatory ) Status;
+    field( readonly ) Id, CreatedAt, ModifiedAt, CreatedBy, ModifiedBy;
 
-  create;
-  update;
-  delete;
+    create;
+    update;
+    delete;
 
-  association _Items { create; }
-//  association _LocalizedStatus; after creating its own BDEF
+    association _Items { create; }
 
-  validation validateNotEmpty on save { field Status; }
+    validation newStatusValid on save { field Status; }
 
-  determination assignExternalNumber on save { create; }
+    determination assignExternalNumber on save { create; }
 
-  determination newStatusValid on modify { field Status; }
+    action( features: instance ) Approve result [1]$self;
 
-  action( features: instance ) Approve result [1]$self;
+    mapping for zov4order corresponding;
 
-  mapping for zov4order corresponding;
-
-}
+  }
 
 define behavior for ZI_R54_OrderItems alias Items
-persistent table zr54orderitem
-lock dependent ( UpId = ID )
-authorization dependent( UpId = ID )
-etag ModifiedAt
-{
-  field( mandatory ) Quantity, Unit;
-  field( readonly ) UpId, Id, CreatedAt, ModifiedAt, CreatedBy, ModifiedBy;
+  persistent table zr54orderitem
+  lock dependent ( UpId = Id )
+  authorization dependent( UpId = Id )
+  etag ModifiedAt
+  {
+    field( mandatory ) Quantity, Unit;
+    field( readonly ) UpId, Id, CreatedAt, ModifiedAt, CreatedBy, ModifiedBy;
 
-  update;
-  delete;
+    update;
+    delete;
 
-  validation validateNotEmpty on save { field Unit, Quantity; }
+    association _Header;
 
-  mapping for zov4orderitem corresponding;
+    validation validateNotEmpty on save { field Unit, Quantity; }
 
-  association _Header;
+    mapping for zr54orderitem corresponding;
 
-}
+  }

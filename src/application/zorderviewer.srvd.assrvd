@@ -1,0 +1,5 @@
+@EndUserText.label: 'Order viewer service'
+define service ZOrderViewer {
+  expose ZC_R54_ReadOrders as Headers;
+  expose ZC_R54_ReadOrderItems as Items;
+}
